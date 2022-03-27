@@ -1,7 +1,7 @@
-body {
+*body {
     /* image for background */
     background-image: url(/assets/images/light\ black.jpeg);
-
+  
     /* font parameters */
     font-family: Arial, Helvetica, sans-serif;
     font-size: 1em;
@@ -10,4 +10,110 @@ body {
     padding-top: 100px;
   }
   
+  button {
+    margin: 1em;
+  }
   
+  .navbar {
+    background-color: #73919b;  
+    color: #b6d7e2;  
+    padding-bottom: 0;
+    padding-left: 0;
+    border-bottom: solid;
+    border-bottom-color: #ccc;
+    width: 100%;
+  }
+  
+  #navbar-title {
+    padding: 15px;
+    font-size: 30px;
+    color: #fff;
+  }
+  
+  /* container for nav header */
+  .container-fluid {
+    padding-left: 5%;
+    padding-right: 5%;
+  }
+  
+  .nav-link {
+    text-decoration: none;
+  }
+  
+  /* Change the color of links on hover */
+  .nav-link:hover {
+    background-color: #b6d7e2;  
+    color: #666;
+  }
+  
+  .right {
+   
+  }
+  
+  #details {
+    background-color: #b6d7e2;  
+    /* provides spacing between the top and bottom nav bars and the content */
+    margin-top: 20px;
+    margin-bottom: 80px;
+    padding: 40px;
+  } 
+   
+  
+  li {
+    height: 50px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding: 5px;
+    background-color: #897d9a;
+    color: #fff;
+    font-size: 1.5em;
+    line-height: 1.5;
+    list-style-type: none;
+  }
+  
+  li:hover {
+    background-color: #9e9268;
+  }
+  
+  #answer-image {
+    float: left;
+    padding-right: 1em;
+    padding-top: 0.25em;
+  }
+  
+  .footer {
+    /* set text properties */
+    background-color: #666;
+    
+    /* sets height of footer*/
+    height: 10%;
+    
+    /* sets properties for footer border*/
+    border-top: solid;
+    border-top-color: #b6d7e2;  
+    border-top-width: 8px;
+  }
+  
+  .footer-text {
+
+    width: 100%;
+    text-align: center;
+  
+    font-size: 10px;
+    color:#fff; 
+  }
+  
+  /* media query for screen size to be applied to center text to switch at same time as navbar */
+  @media (max-width: 768px) {
+    .container-fluid {
+      /* removes paddding on either side */
+      padding-left: 0;
+      padding-right: 0;
+    }
+    li {
+      border-right: none;
+    }
+    .nav-link{
+      padding: 1px;
+    }
+  }

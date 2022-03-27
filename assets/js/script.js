@@ -129,18 +129,6 @@ function playQuiz(questionSet) {
   presentQuestion();
 }
 
-// function to get random question out of array
-function setUpQuestions(arr) {
-  if (test) {console.log("--- setUpQuestions ---");}
-
-  let ranQuest = [];
-
-  for (let i=0; i<arr.length; i++) {
-    ranQuest.push(arr[i]);
-  }
-  return ranQuest;
-}
-
 // function to redraw screen with  question 
 function presentQuestion() {
   if (test) {console.log("--- presentQuestion ---");}
@@ -219,3 +207,206 @@ function scoreAnswer(cur) {
   }
 }
 
+
+
+
+function showAnswers(cur) {
+    if (test) { console.log("--- showAnswer ---"); }
+    // if (test) { console.log("sa length",cur.choices.length);}
+    if (test) { console.log("sa qanda",cur);}
+    if (test) { console.log("sselected ",selectedItem);}
+  
+  
+    for (let i=0; i<cur.choices.length; i++) {
+      if (test) { console.log("sa in for ",i);}
+  
+      let questid = "#questionNum-" + i;
+      // if (test) { console.log("sa qn", questid );}
+      let questrow = document.querySelector(questid);
+  
+      // if (test) { console.log("questrow",questrow);}
+  
+      if (test) { console.log("saf selected" + selectedItem + "<");}
+      if (test) { console.log("saf color test >" +  cur.choices[i] +"<");}
+  
+      if ( cur.choices[i] !== cur.answer ) {
+        if (test) { console.log("color test flase");}
+        questrow.setAttribute("style","background-color: blue");
+      } else {
+        if (test) { console.log("color test true");}
+        questrow.setAttribute("style","background-color: green");
+      }
+    }
+    // pause so user can see results
+    setTimeout(presentQuestion,1500);
+  }
+  
+  // function to set time for game timer
+  function setGameTime() {
+    if (test) { console.log("--- setGameTime ---"); }
+    if (test) { console.log("gameDuration " + gameDuration); }
+    clearInterval(gameInterval);
+    gameSeconds = gameDuration;
+  }
+  
+  //set time function for game + penelty for answering incorectly 
+  function renderTime() {
+  
+    gameTimerEl.textContent = gameDuration - gameSecElapsed;
+    quesTimerEl.textContent = questionDuration - questionSecElapsed;
+  
+    if ( (questionDuration - questionSecElapsed) < 1 ) {
+      // game penelty for letting timer run out
+      gameDuration -= 10;
+      if (test) { console.log("too slow"); }
+      presentQuestion();
+    } 
+  
+    if ( (gameDuration - gameSecElapsed) < 1 ) {
+     endOfGame();
+    }
+  }
+  
+  function startGameTimer () {
+    if (test) { console.log("--- startGameTimer ---"); }
+    setGameTime();
+  
+    gameInterval = setInterval(function() {
+      gameSecElapsed++; 
+      questionSecElapsed++; 
+      renderTime();
+    }, 1000);
+  }
+  
+  function stopTime() {
+    if (test) { console.log("--- stopTime --- ");}
+    gameSeconds = 0;
+    questionSeconds = 0;
+    clearInterval(gameInterval);
+  }
+  
+  // function of end of game
+  function endOfGame() {
+    if (test) { console.log("--- endOfGame ---"); }
+    stopTime();
+    clearDetails();
+  
+    timerTab.setAttribute("style", "visibility: hidden;");
+  
+    let heading = document.createElement("p");
+    heading.setAttribute("id", "main-heading");
+    heading.textContent = "GAME OVER";
+  
+    // creates elements with the instructions for the game
+    let instructions = document.createElement("p");
+    instructions.setAttribute("id", "instructions");
+    instructions.textContent = " Your score is " + score; 
+  
+    // creates button to start the game
+    let playAgain = document.createElement("button");
+    playAgain.setAttribute("id", "playAgain");
+    playAgain.setAttribute("class", "btn btn-secondary");
+    playAgain.textContent = "Play again";
+  
+    // creates input for user to add initials
+    let par = document.createElement("p");
+  
+    let initialsLabel = document.createElement("label");
+    initialsLabel.setAttribute("for","userInitials");
+    initialsLabel.textContent = "Enter Initials: ";
+  
+    let initialsInput = document.createElement("input");
+    initialsInput.setAttribute("id","userInitials");
+    initialsInput.setAttribute("name","userInitials");
+    initialsInput.setAttribute("minlength","3");
+    initialsInput.setAttribute("maxlength","3");
+    initialsInput.setAttribute("size","3");
+  
+  
+    mainEl.appendChild(heading);
+    mainEl.appendChild(instructions);
+    mainEl.appendChild(initialsLabel);
+    mainEl.appendChild(initialsInput);
+    mainEl.appendChild(par);
+    mainEl.appendChild(playAgain);
+  
+    playAgain.addEventListener("click", init);
+  
+  //function to add initials 
+    initialsInput.addEventListener("input", function() {
+      initialsInput.value = initialsInput.value.toUpperCase();
+      if ( initialsInput.value.length === 2 ) { 
+  
+        //create object for this score
+        let thisScore = [ { type: quizType, name: initialsInput.value, score: score } ]; 
+  
+        //get highscores from memory
+        let storedScores = JSON.parse(localStorage.getItem("highScores")); 
+        if (test) { console.log("storedScore",storedScores); }
+  
+        if (storedScores !== null) { 
+          storedScores.push(thisScore[0]); 
+        } else {
+          storedScores = thisScore;
+        }
+  
+        localStorage.setItem("highScores", JSON.stringify(storedScores));
+        highScores();
+      }
+    });
+  }
+  
+  
+  function highScores() {
+    stopTime();
+    clearDetails();
+  
+    timerTab.setAttribute("style", "visibility: hidden;");
+  
+    //get scores from storage
+    let storedScores = JSON.parse(localStorage.getItem("highScores")); 
+  
+    // draw heading
+    let heading = document.createElement("h2");
+    heading.setAttribute("id", "main-heading");
+    heading.textContent = "Top 5 High Score Hall of Fame";
+  
+    mainEl.appendChild(heading);
+  
+    // Render a new li for each score
+    if ( storedScores !== null ) {
+      // sort scores
+      storedScores.sort((a,b) => (a.score < b.score) ? 1: -1);
+  
+      // sets the number of scores to display to 5 or the number of games played. Which ever is less
+      let numScores2Display = 5;
+      if ( storedScores.length < 5 ) { 
+        numScores2Display = storedScores.length; 
+      }
+  
+      for (var i = 0; i < numScores2Display; i++) {
+        var s = storedScores[i];
+  
+        var p = document.createElement("p");
+        p.textContent = s.name + " " + s.score + " ( " + s.type + " )";
+        mainEl.appendChild(p);
+      }
+    } else {
+      var p = document.createElement("p");
+      p.textContent =  "Your Initials Here!"
+      mainEl.appendChild(p);
+    }
+  
+  
+    // creates button to start the game
+    let playAgain = document.createElement("button");
+    playAgain.setAttribute("id", "playAgain");
+    playAgain.setAttribute("class", "btn btn-secondary");
+    playAgain.textContent = "Play!";
+  
+    mainEl.appendChild(playAgain);
+  
+    playAgain.addEventListener("click", init);
+  }
+  
+  highscoreDiv.addEventListener("click", highScores);
