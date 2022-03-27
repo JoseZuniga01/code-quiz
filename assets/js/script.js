@@ -403,3 +403,17 @@ function endOfGame() {
       p.textContent =  "Your Initials Here!"
       mainEl.appendChild(p);
     }
+      // creates button to start the game
+      let playAgain = document.createElement("button");
+      playAgain.setAttribute("id", "playAgain");
+      playAgain.setAttribute("class", "btn btn-secondary");
+      playAgain.textContent = "Play!";
+    
+      mainEl.appendChild(playAgain);
+    
+      playAgain.addEventListener("click", init);
+    }
+    
+    highscoreDiv.addEventListener("click", highScores);
+  
+  
