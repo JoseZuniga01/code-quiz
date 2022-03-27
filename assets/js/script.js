@@ -35,9 +35,6 @@ let mainEl = document.querySelector("#details");
 let timerTab = document.querySelector("#timers");
 
 
-// let questionEl = document.querySelector("#question")
-// let answersListEl = document.querySelector("#answer-list")
-
 // set global variables 
 var test = false;
 var score = 0;
@@ -71,7 +68,6 @@ function init() {
   instructions.setAttribute("id", "instructions");
   instructions.textContent = " If you answer correctly you will score points.  If you score incorrectly you will not lose points, but you will be lose time."; 
 
-  // adding more question - this should move into loop or function
   // creates button to start the game
   let startJsQuiz = document.createElement("button");
   startJsQuiz.setAttribute("id", "startJSQuiz");
@@ -144,7 +140,6 @@ function setUpQuestions(arr) {
 // function to redraw screen with  question 
 function presentQuestion() {
   if (test) {console.log("--- presentQuestion ---");}
-  // if (test) {console.log("cur.choices[i] " + cur.choices);}
 
   //reset time allows to answer question
   questionSecElapsed = 0;
@@ -155,16 +150,14 @@ function presentQuestion() {
     return;
   }
 
-  //sets current object (cur - question) by pulling out of reducedQuiz array leaving the remaining quetions in the array
+  //sets current object pulling out of reducedQuiz array leaving the remaining quetions in the array
   curQuestion = quiz.pop();
 
   //clears html to draw questions
   clearDetails();
    
   // add question to screen
-  //build out display for new item
   let question = document.createElement("h1");
-  // adds data value
   question.setAttribute("question", curQuestion.title);
   question.textContent = curQuestion.title;
   mainEl.appendChild(question)
@@ -174,7 +167,6 @@ function presentQuestion() {
   choiceBox.setAttribute("id","choiceBox");
   mainEl.appendChild(choiceBox);
 
-  //adds answers to screen
   for( let i=0; i<curQuestion.choices.length; i++ ) {
     // creates variable for each choice item
     let listChoice = document.createElement("li");
@@ -192,22 +184,16 @@ function presentQuestion() {
   choiceBox.addEventListener("click", function (){
     scoreAnswer(curQuestion);
   });
-  // calls for the next questions
 }
 
 function scoreAnswer(cur) {
   if (test) { console.log("--- scoreAnswer ---");}
- // ensure that the event on the li
   var e = event.target;
   if ( e.matches("li")) {
     let selectedItem = e.textContent;
-    // if (test) { console.log("check quiz " + quiz.length); }
     if (test) { console.log("selectedItem quiz " + selectedItem); }
-    // if (test) { console.log("selectedItem cur " , cur.answer); }
     if ( selectedItem === cur.answer ) {
-      // if (test) { console.log("correct answer");}
       score += questionDuration - questionSecElapsed;
-      //TODO music 
     } else {
       if (test) { console.log("wrong answer");}
       //penelty for being wrong
@@ -215,13 +201,11 @@ function scoreAnswer(cur) {
     }
   if (test) { console.log("sselected ",selectedItem);}
     showAnswers(cur);
-    // presentQuestion();
   }
 }
 
 function showAnswers(cur) {
     if (test) { console.log("--- showAnswer ---"); }
-    // if (test) { console.log("sa length",cur.choices.length);}
     if (test) { console.log("sa qanda",cur);}
     if (test) { console.log("sselected ",selectedItem);}
   
@@ -230,10 +214,7 @@ function showAnswers(cur) {
       if (test) { console.log("sa in for ",i);}
   
       let questid = "#questionNum-" + i;
-      // if (test) { console.log("sa qn", questid );}
       let questrow = document.querySelector(questid);
-  
-      // if (test) { console.log("questrow",questrow);}
   
       if (test) { console.log("saf selected" + selectedItem + "<");}
       if (test) { console.log("saf color test >" +  cur.choices[i] +"<");}
@@ -265,7 +246,6 @@ function showAnswers(cur) {
     quesTimerEl.textContent = questionDuration - questionSecElapsed;
   
     if ( (questionDuration - questionSecElapsed) < 1 ) {
-      // game penelty for letting timer run out
       gameDuration -= 10;
       if (test) { console.log("too slow"); }
       presentQuestion();
