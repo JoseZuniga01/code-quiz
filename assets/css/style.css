@@ -1,9 +1,7 @@
 *body {
-    /* image for background */
-    background-image: url(/assets/images/light\ black.jpeg);
   
     /* font parameters */
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-size: 1em;
   
     /* added padding to prevent navbar overlap. */
@@ -15,7 +13,7 @@
   }
   
   .navbar {
-    background-color: #73919b;  
+    background-color: #190061;  
     color: #b6d7e2;  
     padding-bottom: 0;
     padding-left: 0;
@@ -25,9 +23,10 @@
   }
   
   #navbar-title {
-    padding: 15px;
-    font-size: 30px;
+    padding: 5px;
+    font-size: 60px;
     color: #fff;
+    justify-content: center;
   }
   
   /* container for nav header */
@@ -42,8 +41,8 @@
   
   /* Change the color of links on hover */
   .nav-link:hover {
-    background-color: #b6d7e2;  
-    color: #666;
+    background-color: #66fcf1;  
+    color: #fff;
   }
   
   .right {
@@ -51,7 +50,7 @@
   }
   
   #details {
-    background-color: #b6d7e2;  
+    background-color: #66fcf1;  
     /* provides spacing between the top and bottom nav bars and the content */
     margin-top: 20px;
     margin-bottom: 80px;
@@ -64,7 +63,7 @@
     margin-top: 5px;
     margin-bottom: 5px;
     padding: 5px;
-    background-color: #897d9a;
+    background-color: #190061;
     color: #fff;
     font-size: 1.5em;
     line-height: 1.5;
@@ -83,14 +82,14 @@
   
   .footer {
     /* set text properties */
-    background-color: #666;
+    background-color: #190061;
     
     /* sets height of footer*/
     height: 10%;
     
     /* sets properties for footer border*/
     border-top: solid;
-    border-top-color: #b6d7e2;  
+    border-top-color: #66fcf1;  
     border-top-width: 8px;
   }
   
