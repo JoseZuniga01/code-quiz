@@ -129,6 +129,18 @@ function playQuiz(questionSet) {
   presentQuestion();
 }
 
+// function to get random question out of array
+function setUpQuestions(arr) {
+  if (test) {console.log("--- setUpQuestions ---");}
+
+  let ranQuest = [];
+
+  for (let i=0; i<arr.length; i++) {
+    ranQuest.push(arr[i]);
+  }
+  return ranQuest;
+}
+
 // function to redraw screen with  question 
 function presentQuestion() {
   if (test) {console.log("--- presentQuestion ---");}
@@ -207,9 +219,6 @@ function scoreAnswer(cur) {
   }
 }
 
-
-
-
 function showAnswers(cur) {
     if (test) { console.log("--- showAnswer ---"); }
     // if (test) { console.log("sa length",cur.choices.length);}
@@ -284,9 +293,8 @@ function showAnswers(cur) {
     questionSeconds = 0;
     clearInterval(gameInterval);
   }
-  
-  // function of end of game
-  function endOfGame() {
+// function of end of game
+function endOfGame() {
     if (test) { console.log("--- endOfGame ---"); }
     stopTime();
     clearDetails();
@@ -355,58 +363,4 @@ function showAnswers(cur) {
       }
     });
   }
-  
-  
-  function highScores() {
-    stopTime();
-    clearDetails();
-  
-    timerTab.setAttribute("style", "visibility: hidden;");
-  
-    //get scores from storage
-    let storedScores = JSON.parse(localStorage.getItem("highScores")); 
-  
-    // draw heading
-    let heading = document.createElement("h2");
-    heading.setAttribute("id", "main-heading");
-    heading.textContent = "Top 5 High Score Hall of Fame";
-  
-    mainEl.appendChild(heading);
-  
-    // Render a new li for each score
-    if ( storedScores !== null ) {
-      // sort scores
-      storedScores.sort((a,b) => (a.score < b.score) ? 1: -1);
-  
-      // sets the number of scores to display to 5 or the number of games played. Which ever is less
-      let numScores2Display = 5;
-      if ( storedScores.length < 5 ) { 
-        numScores2Display = storedScores.length; 
-      }
-  
-      for (var i = 0; i < numScores2Display; i++) {
-        var s = storedScores[i];
-  
-        var p = document.createElement("p");
-        p.textContent = s.name + " " + s.score + " ( " + s.type + " )";
-        mainEl.appendChild(p);
-      }
-    } else {
-      var p = document.createElement("p");
-      p.textContent =  "Your Initials Here!"
-      mainEl.appendChild(p);
-    }
-  
-  
-    // creates button to start the game
-    let playAgain = document.createElement("button");
-    playAgain.setAttribute("id", "playAgain");
-    playAgain.setAttribute("class", "btn btn-secondary");
-    playAgain.textContent = "Play!";
-  
-    mainEl.appendChild(playAgain);
-  
-    playAgain.addEventListener("click", init);
-  }
-  
-  highscoreDiv.addEventListener("click", highScores);
+
